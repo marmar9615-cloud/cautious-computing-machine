@@ -1,0 +1,19 @@
+{
+  "name": "appforge-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered full-stack app builder",
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend",
+    "packages/mobile"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=packages/backend",
+    "dev:frontend": "npm run dev --workspace=packages/frontend",
+    "build:frontend": "npm run build --workspace=packages/frontend",
+    "test": "npm run test --workspaces --if-present",
+    "test:backend": "npm run test --workspace=packages/backend",
+    "test:frontend": "npm run test --workspace=packages/frontend"
+  }
+}
