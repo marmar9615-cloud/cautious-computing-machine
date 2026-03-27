@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  status      String   @default("completed")
+  files       String   // JSON array of { path: string, content: string }
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
