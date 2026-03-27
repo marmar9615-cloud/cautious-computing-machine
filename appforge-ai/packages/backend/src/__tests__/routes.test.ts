@@ -15,6 +15,14 @@ describe('API Routes', () => {
     expect(res.body.error).toBe('Description is required');
   });
 
+  it('POST /api/generate rejects short descriptions', async () => {
+    const res = await request(app)
+      .post('/api/generate')
+      .send({ description: 'short' });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Description must be at least 10 characters');
+  });
+
   it('POST /api/generate rejects long descriptions', async () => {
     const res = await request(app)
       .post('/api/generate')
@@ -26,7 +34,7 @@ describe('API Routes', () => {
     const res = await request(app)
       .post('/api/generate')
       .send({ description: 'Build a simple todo app' });
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(res.body.project).toBeDefined();
     expect(res.body.project.id).toBeDefined();
     expect(res.body.project.files).toBeInstanceOf(Array);
@@ -43,7 +51,7 @@ describe('API Routes', () => {
     // First create a project
     const createRes = await request(app)
       .post('/api/generate')
-      .send({ description: 'Build a blog' });
+      .send({ description: 'Build a blog platform' });
     const id = createRes.body.project.id;
 
     const res = await request(app).get(`/api/projects/${id}`);
@@ -60,7 +68,7 @@ describe('API Routes', () => {
   it('GET /api/projects/:id/download returns zip', async () => {
     const createRes = await request(app)
       .post('/api/generate')
-      .send({ description: 'Build a chat app' });
+      .send({ description: 'Build a chat application' });
     const id = createRes.body.project.id;
 
     const res = await request(app).get(`/api/projects/${id}/download`);

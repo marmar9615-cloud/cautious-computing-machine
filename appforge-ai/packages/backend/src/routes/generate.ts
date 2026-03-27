@@ -13,6 +13,10 @@ generateRouter.post('/generate', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Description is required' });
     }
 
+    if (description.trim().length < 10) {
+      return res.status(400).json({ error: 'Description must be at least 10 characters' });
+    }
+
     if (description.length > 2000) {
       return res.status(400).json({ error: 'Description must be under 2000 characters' });
     }
@@ -28,7 +32,7 @@ generateRouter.post('/generate', async (req: Request, res: Response) => {
       },
     });
 
-    res.json({
+    res.status(201).json({
       project: {
         ...project,
         files: generated.files,
